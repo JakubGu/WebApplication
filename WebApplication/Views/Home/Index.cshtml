@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Witamy";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4 fw-bold">👋 Witaj w aplikacji tłumaczeń!</h1>
+    <p class="lead mt-3">
+        Tutaj możesz przeglądać i zarządzać tłumaczeniami na różne języki.
+    </p>
+
+    <div class="mt-5 row justify-content-center gap-4">
+        <!-- Button to navigate to all translations -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🌍 Wszystkie tłumaczenia</h5>
+                    <p class="card-text">Zobacz listę dostępnych tłumaczeń.</p>
+                    <a href="@Url.Action("Index", "Translations")" class="btn btn-primary">Przeglądaj</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button to navigate to the translation creation form -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📝 Dodaj nowe tłumaczenie</h5>
+                    <p class="card-text">Utwórz nowe tłumaczenie w aplikacji.</p>
+                    <a href="@Url.Action("Create", "Translations")" class="btn btn-primary">Dodaj</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 text-muted small">
+        © @DateTime.Now.Year – Twoja aplikacja tłumaczeń
+    </footer>
+</div>

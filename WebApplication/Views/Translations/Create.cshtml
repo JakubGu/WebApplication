@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Dodaj nowe tłumaczenie";
+}
+
+<h2 class="mb-4" style="text-align: left; font-weight: 600; font-size: 28px; color: #333;">Dodaj nowe tłumaczenie</h2>
+
+<!-- Form for creating a new translation -->
+<form id="createTranslationForm" method="post">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Source Text -->
+            <div class="col-md-12 mb-3">
+                <div class="form-group input-group">
+                    <span class="input-group-text"><i class="fas fa-text-width"></i></span>
+                    <input type="text" id="SourceText" name="SourceText" class="form-control" placeholder="Wpisz tekst do przetłumaczenia" required />
+                </div>
+            </div>
+
+            <!-- Translation Language -->
+            <div class="col-md-12 mb-3">
+                <div class="form-group input-group">
+                    <span class="input-group-text"><i class="fas fa-language"></i></span>
+                    <input type="text" id="TranslationLanguage" name="TranslationLanguage" class="form-control" placeholder="Wpisz język docelowy" required />
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-md-12 text-left mb-3">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle"></i> Dodaj tłumaczenie</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- FontAwesome for icons -->
+    <script>
+        $(document).ready(function () {
+            $('#createTranslationForm').submit(function (e) {
+                e.preventDefault();
+
+                var sourceText = $('#SourceText').val();
+                var translationLanguage = $('#TranslationLanguage').val();
+
+                $.ajax({
+                    url: '@Url.Action("AddFromExternalApi", "Translations")',
+                    type: 'POST',
+                    data: {
+                        SourceText: sourceText,
+                        TranslationLanguage: translationLanguage
+                    },
+                    success: function (data) {
+                        window.location.href = '@Url.Action("Index", "Translations")';
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+}

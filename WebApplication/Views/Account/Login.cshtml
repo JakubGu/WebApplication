@@ -1,0 +1,26 @@
+﻿@model WebApplication.Models.ViewModels.LoginViewModel
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "w-100", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Wprowadź adres e-mail" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Wprowadź hasło" })
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-check mb-3">
+        @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", id = "rememberMe" })
+        @Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label", @for = "rememberMe" })
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">🔐 Zaloguj się</button>
+}
+

@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Lista tłumaczeń";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista tłumaczeń</h2>
+
+<table id="translationsTable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Tłumaczenie</th>
+            <th>Oryginał</th>
+            <th>Język</th>
+            <th>Data</th>
+            <th>Użytkownik</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
+
+    <script>
+        $(document).ready(function () {
+            $('#translationsTable').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetTranslations", "Translations")',
+                    type: 'GET'
+                },
+                columns: [
+                    { data: 'SourceText' },
+                    { data: 'TranslatedText' },
+                    { data: 'TranslationLanguage' },
+                    {
+                        data: 'CreatedAt',
+                        render: function (data) {
+                            if (!data) return '';
+
+                            const timestampMatch = /\/Date\((\d+)\)\//.exec(data);
+                            if (!timestampMatch) return data;
+
+                            const timestamp = parseInt(timestampMatch[1], 10);
+                            const date = new Date(timestamp);
+
+                            return date.toLocaleString("pl-PL");
+                        }
+                    },
+                    { data: 'UserName' }
+                ],
+                pageLength: 25,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Wszystkie"]],
+                language: {
+                    search: "Szukaj:",
+                    lengthMenu: "Pokaż _MENU_ rekordów",
+                    info: "Strona _PAGE_ z _PAGES_",
+                    paginate: {
+                        previous: "Poprzednia",
+                        next: "Następna"
+                    },
+                    zeroRecords: "Brak wyników",
+                    infoEmpty: "Brak danych",
+                    infoFiltered: "(przefiltrowano z _MAX_ rekordów)"
+                }
+            });
+        });
+    </script>
+}
+
+
+
